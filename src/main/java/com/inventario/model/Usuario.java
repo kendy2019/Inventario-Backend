@@ -22,7 +22,7 @@ public class Usuario {
 
     @Enumerated(EnumType.STRING)
     private Role rol; // ADMIN o EMPLOYEE
-
+    
     // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

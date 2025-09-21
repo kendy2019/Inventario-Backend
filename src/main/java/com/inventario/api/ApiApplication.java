@@ -2,13 +2,15 @@ package com.inventario.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.inventario")
+@EntityScan(basePackages = "com.inventario.model")
+@EnableJpaRepositories(basePackages = "com.inventario.repository")
 public class ApiApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(ApiApplication.class, args);
-		System.out.print("Servidor levantado!.......");
-		}
-
+    public static void main(String[] args) {
+        SpringApplication.run(ApiApplication.class, args);
+        System.out.println("Servidor levantado!.......");
+    }
 }
