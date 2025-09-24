@@ -21,7 +21,7 @@ public class Usuario {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role rol; // ADMIN o EMPLOYEE
+    private Role rol;
     
     // Getters y Setters
     public Long getId() { return id; }
