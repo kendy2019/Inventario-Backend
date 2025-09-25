@@ -21,7 +21,7 @@ public class VentaItem {
     @ManyToOne
     @JoinColumn(name = "producto_id")
     private Producto producto;
-
+                                             
     private Integer cantidad;
     private BigDecimal precioUnitario;
 

@@ -34,9 +34,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 👈 Importante
+            .cors(cors -> {}) // 👈 habilitar CORS
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() // login y registro públicos
+                .requestMatchers("/api/auth/**").permitAll()	
                 .requestMatchers("/api/productos/**").hasAnyRole("ADMIN", "EMPLEADO")
                 .requestMatchers("/api/ventas/**").hasAnyRole("ADMIN", "EMPLEADO")
                 .requestMatchers("/api/usuarios/**").hasRole("ADMIN")

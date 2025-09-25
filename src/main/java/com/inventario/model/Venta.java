@@ -21,7 +21,7 @@ public class Venta {
     private String clienteNombre;
 
     private String marcaCelular;
-    private String detalleCelular;
+    private String detalleCelular;  
 
     private LocalDateTime fechaIngresado;
 
@@ -42,7 +42,7 @@ public class Venta {
 
     public String getCodigoVenta() { return codigoVenta; }
     public void setCodigoVenta(String codigoVenta) { this.codigoVenta = codigoVenta; }
-
+ 
     public String getClienteNombre() { return clienteNombre; }
     public void setClienteNombre(String clienteNombre) { this.clienteNombre = clienteNombre; }
 
