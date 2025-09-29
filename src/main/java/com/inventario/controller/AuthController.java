@@ -39,18 +39,30 @@ public class AuthController {
         return usuarioRepository.save(usuario);
     }
 
-    // Login JWT
+ // Login JWT
     @PostMapping("/login")
-    public Map<String, String> login(@RequestBody Map<String, String> credenciales) {
+    public Map<String, Object> login(@RequestBody Map<String, String> credenciales) {
         String username = credenciales.get("username");
         String password = credenciales.get("password");
 
+        // Autenticación con Spring 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
 
+        // Generar el token
         String token = jwtUtil.generarToken(username);
 
-        return Map.of("token", token);
+        // Buscar al usuario en la base de datos para obtener info extra 
+        Usuario usuarioDB = usuarioRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Devolver token + datos del usuario
+        return Map.of(
+                "token", token,
+                "username", usuarioDB.getUsername(),
+                "rol", usuarioDB.getRol().name()
+        );
     }
+
 }
