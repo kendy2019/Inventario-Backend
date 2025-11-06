@@ -136,4 +136,9 @@ public class Producto {
     public void setNotas(String notas) {
         this.notas = notas;
     }
+
+	public Object map(Object object) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -1,10 +1,12 @@
 	package com.inventario.controller;
 	
-	import com.inventario.model.Producto;
+	import com.inventario.dto.ProductoBajoStockDTO;
+import com.inventario.model.Producto;
 	import com.inventario.service.ProductoService;
 	import org.springframework.http.HttpStatus;
 	import org.springframework.http.ResponseEntity;
-	import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 	
 	import java.util.List;
 	import java.util.Optional;
@@ -42,6 +44,14 @@
 	        List<Producto> productos = productoService.buscarPorNombre(nombre);
 	        return ResponseEntity.ok(productos);
 	    }
+	    @GetMapping("/bajo-stock")
+	    @PreAuthorize("hasAnyAuthority('ADMIN', 'EMPLOYEE')") // O solo ADMIN si prefieres
+	    public ResponseEntity<List<ProductoBajoStockDTO>> getProductosBajoStock(
+	            @RequestParam(defaultValue = "5") Integer umbral) { // Puedes ajustar el umbral por defecto
+	        // Asegúrate de que tu ProductoService tenga el método findLowStockProducts
+	        return ResponseEntity.ok(productoService.findLowStockProducts(umbral));
+	    }
+	    
 	    @PutMapping("/{id}")
 	    public ResponseEntity<Producto> actualizar(@PathVariable Long id, @RequestBody Producto producto) {
 	        try {

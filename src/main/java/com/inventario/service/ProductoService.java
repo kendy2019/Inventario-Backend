@@ -2,9 +2,11 @@ package com.inventario.service;
  
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.inventario.dto.ProductoBajoStockDTO;
 import com.inventario.model.Producto;
 import com.inventario.repository.ProductoRepository;
 
@@ -43,5 +45,13 @@ public class ProductoService {
     }
     public List<Producto> buscarPorNombre(String nombre) {
         return productoRepository.findByNombreContainingIgnoreCase(nombre);
+    }
+    public List<ProductoBajoStockDTO> findLowStockProducts(Integer umbral) {
+       
+        return productoRepository.findProductosConBajoStock(umbral).stream()
+                
+                .map(p -> new ProductoBajoStockDTO(p.getId(), p.getNombre(), p.getStock()))
+               
+                .collect(Collectors.toList());
     }
 }

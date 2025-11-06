@@ -1,36 +1,43 @@
 package com.inventario.repository;
 
-import com.inventario.dto.VentasPorDiaDTO;
+import com.inventario.dto.VentasPorDiaDTO; 
 import com.inventario.model.Venta;
-
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.time.Instant;
+import java.util.List;
 
 @Repository
 public interface VentaRepository extends JpaRepository<Venta, Long> {
-	
-	
-	 // --- MÉTODOS PARA ESTADÍSTICAS ---
+
+   
     @Query("SELECT COALESCE(SUM(v.total), 0) FROM Venta v")
-    Double findTotalVentas();
+    Double findTotalVentasGlobal(); 
 
     @Query("SELECT COUNT(v) FROM Venta v")
-    Long countNumeroOrdenes();
+    Long countNumeroOrdenesGlobal(); 
 
     @Query("SELECT COUNT(DISTINCT v.cliente.id) FROM Venta v")
     Long countClientesActivos();
 
     @Query("SELECT COALESCE(AVG(v.total), 0) FROM Venta v")
-    Double findTicketPromedio();
-
-    // --- MÉTODO PARA GRÁFICO ---
-    @Query("SELECT new com.inventario.dto.VentasPorDiaDTO(CAST(v.fecha AS java.time.LocalDate), SUM(v.total)) " +
-           "FROM Venta v GROUP BY CAST(v.fecha AS java.time.LocalDate) ORDER BY CAST(v.fecha AS java.time.LocalDate) ASC")
-    List<VentasPorDiaDTO> findVentasAgrupadasPorDia();
+    Double findTicketPromedioGlobal(); 
     
-    // --- MÉTODO PARA VENTAS RECIENTES ---
+    @Query("SELECT COALESCE(SUM(v.total), 0.0) FROM Venta v WHERE v.fecha >= :inicioMes AND v.fecha < :inicioMesSiguiente")
+    Double findTotalVentasMes(@Param("inicioMes") Instant inicioMes, @Param("inicioMesSiguiente") Instant inicioMesSiguiente);
+
+    
+    @Query("SELECT new com.inventario.dto.VentasPorDiaDTO(CAST(v.fecha AS java.time.LocalDate), SUM(v.total)) " +
+           "FROM Venta v " +
+           "WHERE v.fecha >= :fechaInicio " + 
+           "GROUP BY CAST(v.fecha AS java.time.LocalDate) ORDER BY CAST(v.fecha AS java.time.LocalDate) ASC")
+    List<VentasPorDiaDTO> findVentasAgrupadasPorDia(@Param("fechaInicio") Instant fechaInicio); // Este es el método correcto
+
+  
     List<Venta> findTop5ByOrderByFechaDesc();
+
+   
 }

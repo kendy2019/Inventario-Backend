@@ -9,7 +9,7 @@ public class VentaRecienteDTO {
     private Long id;
     private String clienteNombre;
     private BigDecimal total;
-    private ZonedDateTime fecha;
+    private Instant fecha;;
     
     public VentaRecienteDTO(Venta venta) {
         this.id = venta.getId();
@@ -42,13 +42,13 @@ public class VentaRecienteDTO {
 		this.total = total;
 	}
 
-	public ZonedDateTime getFecha() {
-		return fecha;
-	}
+	  public Instant getFecha() {
+	        return fecha;
+	    }
 
-	public void setFecha(ZonedDateTime fecha) {
-		this.fecha = fecha;
-	}
+	  public void setFecha(Instant fecha) {
+	        this.fecha = fecha;
+	    }
 
     
     
