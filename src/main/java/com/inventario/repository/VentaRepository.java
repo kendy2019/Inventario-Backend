@@ -30,10 +30,10 @@ public interface VentaRepository extends JpaRepository<Venta, Long> {
     Double findTotalVentasMes(@Param("inicioMes") Instant inicioMes, @Param("inicioMesSiguiente") Instant inicioMesSiguiente);
 
     
-    @Query("SELECT new com.inventario.dto.VentasPorDiaDTO(CAST(v.fecha AS java.time.LocalDate), SUM(v.total)) " +
+    @Query("SELECT new com.inventario.dto.VentasPorDiaDTO(CAST(v.fecha AS java.time.Instant), SUM(v.total)) " +
            "FROM Venta v " +
            "WHERE v.fecha >= :fechaInicio " + 
-           "GROUP BY CAST(v.fecha AS java.time.LocalDate) ORDER BY CAST(v.fecha AS java.time.LocalDate) ASC")
+           "GROUP BY CAST(v.fecha AS java.time.Instant) ORDER BY CAST(v.fecha AS java.time.Instant) ASC")
     List<VentasPorDiaDTO> findVentasAgrupadasPorDia(@Param("fechaInicio") Instant fechaInicio); // Este es el método correcto
 
   
