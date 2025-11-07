@@ -1,5 +1,6 @@
 package com.inventario.dto;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class GuiaSalidaRequestDTO {
     private String destino;
     private String motivo;
     private String observaciones;
-    private LocalDate fechaSalida;
+    private Instant fechaSalida;
     private List<GuiaSalidaItemDTO> items;
 
     // Getters y Setters
@@ -39,11 +40,11 @@ public class GuiaSalidaRequestDTO {
         this.observaciones = observaciones;
     }
 
-    public LocalDate getFechaSalida() {
+    public Instant getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(LocalDate fechaSalida) {
+    public void setFechaSalida(Instant fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 

@@ -1,6 +1,8 @@
 package com.inventario.model;
 
 import jakarta.persistence.*;
+
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class GuiaSalida {
     private String motivo;
 
     @Column(name = "fecha_salida", nullable = false)
-    private LocalDate fechaSalida;
+    private Instant fechaSalida;
 
     private String observaciones;
 
@@ -68,12 +70,12 @@ public class GuiaSalida {
         this.motivo = motivo;
     }
 
-    public LocalDate getFechaSalida() {
+    public Instant getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(LocalDate fechaSalida) {
-        this.fechaSalida = fechaSalida;
+    public void setFechaSalida(Instant instant) {
+        this.fechaSalida = instant;
     }
 
     public String getObservaciones() {

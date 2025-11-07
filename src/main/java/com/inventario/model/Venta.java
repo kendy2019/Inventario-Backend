@@ -3,7 +3,7 @@ package com.inventario.model;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.ZonedDateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
