@@ -1,6 +1,7 @@
 package com.inventario.dto;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -8,7 +9,7 @@ public class VentaRequestDTO {
     private CotizacionDTO cotizacion;
     private List<VentaItemDTO> items;
     private BigDecimal total;
-    private ZonedDateTime fecha;
+    private Instant fecha;
     private String registradoPor;
 	public CotizacionDTO getCotizacion() {
 		return cotizacion;
@@ -28,10 +29,10 @@ public class VentaRequestDTO {
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
-	public ZonedDateTime getFecha() {
+	public Instant getFecha() {
 		return fecha;
 	}
-	public void setFecha(ZonedDateTime fecha) {
+	public void setFecha(Instant fecha) {
 		this.fecha = fecha;
 	}
 	public String getRegistradoPor() {
