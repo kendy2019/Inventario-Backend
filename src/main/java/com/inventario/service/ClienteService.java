@@ -1,6 +1,7 @@
 package com.inventario.service;
 
 import com.inventario.model.Cliente;
+import com.inventario.model.TipoCliente;
 import com.inventario.repository.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,6 @@ public class ClienteService {
 
     /**
      * Obtiene todos los clientes de la base de datos.
-     * @return Una lista de todos los clientes.
      */
     public List<Cliente> listarTodos() {
         return clienteRepository.findAll();
@@ -27,8 +27,6 @@ public class ClienteService {
 
     /**
      * Busca un cliente por su ID.
-     * @param id El ID del cliente.
-     * @return Un Optional con el cliente si se encuentra.
      */
     public Optional<Cliente> buscarPorId(Long id) {
         return clienteRepository.findById(id);
@@ -36,24 +34,26 @@ public class ClienteService {
 
     /**
      * Guarda un nuevo cliente o actualiza uno existente.
-     * @param cliente El cliente a guardar.
-     * @return El cliente guardado.
      */
     public Cliente guardar(Cliente cliente) {
+        // Si no se especifica tipo, se asigna un valor por defecto
+        if (cliente.getTipoCliente() == null) {
+            cliente.setTipoCliente(TipoCliente.FINAL);
+        }
         return clienteRepository.save(cliente);
     }
 
     /**
      * Actualiza un cliente existente.
-     * @param id El ID del cliente a actualizar.
-     * @param clienteActualizado Los nuevos datos del cliente.
-     * @return El cliente actualizado.
      */
     public Cliente actualizar(Long id, Cliente clienteActualizado) {
         return clienteRepository.findById(id)
                 .map(clienteExistente -> {
                     clienteExistente.setNombre(clienteActualizado.getNombre());
                     clienteExistente.setTelefono(clienteActualizado.getTelefono());
+                    clienteExistente.setEmail(clienteActualizado.getEmail());
+                    clienteExistente.setDireccion(clienteActualizado.getDireccion());
+                    clienteExistente.setTipoCliente(clienteActualizado.getTipoCliente());
                     return clienteRepository.save(clienteExistente);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con ID: " + id));
@@ -61,7 +61,6 @@ public class ClienteService {
 
     /**
      * Elimina un cliente por su ID.
-     * @param id El ID del cliente a eliminar.
      */
     public void eliminar(Long id) {
         if (!clienteRepository.existsById(id)) {
@@ -69,13 +68,18 @@ public class ClienteService {
         }
         clienteRepository.deleteById(id);
     }
-    
+
     /**
-     * Busca clientes por un término de búsqueda en su nombre.
-     * @param nombre El término para buscar en el nombre de los clientes.
-     * @return Una lista de clientes que coinciden.
+     * Busca clientes por nombre.
      */
     public List<Cliente> buscarPorNombre(String nombre) {
         return clienteRepository.findByNombreContainingIgnoreCase(nombre);
+    }
+
+    /**
+     * Busca clientes por tipo (opcional).
+     */
+    public List<Cliente> buscarPorTipo(TipoCliente tipoCliente) {
+        return clienteRepository.findByTipoCliente(tipoCliente);
     }
 }

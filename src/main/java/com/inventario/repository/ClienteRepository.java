@@ -1,16 +1,16 @@
 package com.inventario.repository;
 
 import com.inventario.model.Cliente;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
+import com.inventario.model.TipoCliente;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+import org.springframework.data.jpa.repository.JpaRepository;
+
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     Optional<Cliente> findByTelefono(String telefono);
     List<Cliente> findByNombreContainingIgnoreCase(String nombre);
-    
-    
+
+    // 🔹 Nuevo método opcional para filtrar por tipo de cliente
+    List<Cliente> findByTipoCliente(TipoCliente tipoCliente);
 }
