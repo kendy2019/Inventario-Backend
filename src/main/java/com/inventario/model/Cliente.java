@@ -14,6 +14,9 @@ public class Cliente {
     @Column(nullable = false)
     private String nombre;
 
+    @Column(unique = true, length = 8)
+    private String dni; 
+
     @Column(unique = true)
     private String telefono;
 
@@ -24,17 +27,20 @@ public class Cliente {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TipoCliente tipoCliente; // 🔹 Nuevo campo con Enum
+    private TipoCliente tipoCliente;
 
     @OneToMany(mappedBy = "cliente")
     private List<Venta> ventas;
 
-    // Getters y Setters
+ 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getDni() { return dni; }  
+    public void setDni(String dni) { this.dni = dni; } 
 
     public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
