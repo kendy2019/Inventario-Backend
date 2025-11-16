@@ -32,13 +32,13 @@ import org.springframework.web.bind.annotation.*;
 	        return productoService.listarTodos();
 	    }
 	
-	    @GetMapping("/{id}")
-	    public ResponseEntity<Producto> buscar(@PathVariable Long id) {
+	 //  @GetMapping("/{id}")
+	 //  public ResponseEntity<Producto> buscar(@PathVariable Long id) {
 	        // Usando Optional para manejar el caso de que no se encuentre
-	        return productoService.buscarPorId(id)
-	                .map(producto -> ResponseEntity.ok(producto))
-	                .orElse(ResponseEntity.notFound().build());
-	    }
+	 //     return productoService.buscarPorId(id)
+	 //             .map(producto -> ResponseEntity.ok(producto))
+	 //              .orElse(ResponseEntity.notFound().build());
+	 //   }
 	    @GetMapping("/buscar")
 	    public ResponseEntity<List<Producto>> buscarPorNombre(@RequestParam String nombre) {
 	        List<Producto> productos = productoService.buscarPorNombre(nombre);
